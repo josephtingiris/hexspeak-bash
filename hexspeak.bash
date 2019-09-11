@@ -57,6 +57,8 @@ for WORD in $(cat "${WORDS_FILE}" | sort -u); do
     # strip these ...
     HEXWORD=${HEXWORD//\'/}
     HEXWORD=${HEXWORD//\"/}
+    HEXWORD=${HEXWORD//\//}
+    HEXWORD=${HEXWORD//\\/}
     HEXWORD=${HEXWORD//-/}
     HEXWORD=${HEXWORD//./}
 
