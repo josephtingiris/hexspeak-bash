@@ -1,3 +1,5 @@
+# /usr/share/dict/words
+
 [1] 57 = 5-T
 [2] 41 = A1
 [3] 41 = A1

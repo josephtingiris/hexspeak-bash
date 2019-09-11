@@ -1,3 +1,5 @@
+# /usr/share/dict/words
+
 [1] 441B0126 = AALBORG
 [2] 4B4C15C1 = ABACISCI
 [3] 4B4C7012 = ABACTOR

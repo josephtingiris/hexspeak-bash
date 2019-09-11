@@ -1,3 +1,5 @@
+# /usr/share/dict/words
+
 [1] 157 = 1ST
 [2] 461 = 4GL
 [3] 444 = AAA

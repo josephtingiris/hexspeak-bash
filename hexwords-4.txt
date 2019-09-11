@@ -1,3 +1,5 @@
+# /usr/share/dict/words
+
 [1] 312D = 3RD
 [2] 4444 = AAAA
 [3] 4441 = AAAL
