@@ -11,4 +11,4 @@ usage:
 `hexspeak.bash <hexspeak word length>`
 
 ### env
-`export WORD_FILE=<file containing words> # default is /usr/share/dict/words`
+`export WORDS_FILE=<file containing words> # default is /usr/share/dict/words`

@@ -3,12 +3,12 @@
 # joseph.tingiris@gmail.com
 
 # use environment word file or default ...
-if [ ${#WORD_FILE} -eq 0 ]; then
-    WORD_FILE=/usr/share/dict/words
+if [ ${#WORDS_FILE} -eq 0 ]; then
+    WORDS_FILE=/usr/share/dict/words
 fi
 
-if [ ! -r "${WORD_FILE}" ]; then
-    printf "\ncan't find word file '${WORD_FILE}'\n\n"
+if [ ! -r "${WORDS_FILE}" ]; then
+    printf "\ncan't find word file '${WORDS_FILE}'\n\n"
     exit 1
 fi
 
@@ -22,12 +22,12 @@ else
     HEXWORD_LENGTH=0
 fi
 
-# array of this=that (replacements)
+# array of this=that (replacements); order matters
 THISISTHATS=()
 THISISTHATS+=("ONE=1")
 THISISTHATS+=("TWO=2")
 THISISTHATS+=("TOO=2")
-THISISTHATS+=("TO=2")
+THISISTHATS+=("^TO=2")
 THISISTHATS+=("THREE=3")
 THISISTHATS+=("FORE=4")
 THISISTHATS+=("FOUR=4")
@@ -43,11 +43,13 @@ THISISTHATS+=("E=3")
 THISISTHATS+=("I=1")
 THISISTHATS+=("G=6")
 THISISTHATS+=("L=1")
+THISISTHATS+=("O=0")
 THISISTHATS+=("S=5")
+THISISTHATS+=("T=7")
 
 HEXWORDS=0 # counter
 declare -u WORD
-for WORD in $(cat "${WORD_FILE}"); do
+for WORD in $(cat "${WORDS_FILE}" | sort -u); do
     IS_HEXWORD=1 # false
 
     HEXWORD=${WORD}
@@ -61,9 +63,12 @@ for WORD in $(cat "${WORD_FILE}"); do
     # test; replace this with that
     for THISISTHAT in ${THISISTHATS[@]}; do
         THIS=${THISISTHAT%%=*}
-        if [[ ${HEXWORD} == *${THIS}* ]]; then
+        if [[ "${HEXWORD}" =~ ${THIS} ]]; then
             IS_HEXWORD=0 # preliminary, true
             THAT=${THISISTHAT##*=}
+            # don't put this simple regex match in that string
+            THIS=${THIS//^/}
+            THIS=${THIS//$/}
             HEXWORD=${HEXWORD//${THIS}/${THAT}}
         fi
     done
