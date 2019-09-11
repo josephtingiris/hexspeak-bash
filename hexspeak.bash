@@ -12,6 +12,8 @@ if [ ! -r "${WORDS_FILE}" ]; then
     exit 1
 fi
 
+printf "# ${WORDS_FILE}\n\n"
+
 # if it's an integer then the first argument matches the length of the resulting hexword
 declare -i HEXWORD_LENGTH
 if [[ ${1} =~ ^[0-9]+ ]]; then
