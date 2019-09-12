@@ -12,8 +12,6 @@ if [ ! -r "${WORDS_FILE}" ]; then
     exit 1
 fi
 
-printf "# ${WORDS_FILE}\n\n"
-
 # if it's an integer then the first argument matches the length of the resulting hexword
 declare -i HEXWORD_LENGTH
 if [[ ${1} =~ ^[0-9]+ ]]; then
@@ -24,13 +22,15 @@ else
     HEXWORD_LENGTH=0
 fi
 
+printf "# ${WORDS_FILE}"
+printf "\n\n"
+
 # array of this=that (replacements); order matters
 THISISTHATS=()
 THISISTHATS+=("ONE=1")
 THISISTHATS+=("TWO=2")
 THISISTHATS+=("TOO=2")
 THISISTHATS+=("^TO=2")
-THISISTHATS+=("TO$=2")
 THISISTHATS+=("THREE=3")
 THISISTHATS+=("FORE=4")
 THISISTHATS+=("FOUR=4")
@@ -83,8 +83,14 @@ for WORD in $(cat "${WORDS_FILE}" | sort -u); do
         if [ ${HEXWORD_LENGTH} -eq 0 ] || [ ${#HEXWORD} -eq ${HEXWORD_LENGTH} ]; then
             # if length is zero or matches
             let HEXWORDS=${HEXWORDS}+1
-            printf "[%b] %s = %s\n" ${HEXWORDS} ${HEXWORD} ${WORD}
+            printf "%s = %s\n" "${HEXWORD}" "${WORD}"
         fi
     fi
 
 done
+
+printf "\n# ${HEXWORDS} hexwords"
+if [ ${HEXWORD_LENGTH} -gt 0 ]; then
+    printf " that are ${HEXWORD_LENGTH} characters in length"
+fi
+printf "\n"
