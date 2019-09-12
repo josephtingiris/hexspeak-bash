@@ -40,8 +40,6 @@ THISISTHATS+=("SEVEN=7")
 THISISTHATS+=("REAT=R8")
 THISISTHATS+=("ATE=8")
 THISISTHATS+=("NINE=9")
-THISISTHATS+=("A=4")
-THISISTHATS+=("E=3")
 THISISTHATS+=("I=1")
 THISISTHATS+=("G=6")
 THISISTHATS+=("L=1")
@@ -49,6 +47,7 @@ THISISTHATS+=("O=0")
 THISISTHATS+=("R=12")
 THISISTHATS+=("S=5")
 THISISTHATS+=("T=7")
+THISISTHATS+=("W=3")
 
 HEXWORDS=0 # counter
 declare -u WORD
@@ -58,12 +57,7 @@ for WORD in $(cat "${WORDS_FILE}" | sort -u); do
     HEXWORD=${WORD}
 
     # strip these ...
-    HEXWORD=${HEXWORD//\'/}
-    HEXWORD=${HEXWORD//\"/}
-    HEXWORD=${HEXWORD//\//}
-    HEXWORD=${HEXWORD//\\/}
-    HEXWORD=${HEXWORD//-/}
-    HEXWORD=${HEXWORD//./}
+    HEXWORD=${HEXWORD//[^[:alnum:]]/}
 
     # test; replace this with that
     for THISISTHAT in ${THISISTHATS[@]}; do
@@ -71,9 +65,8 @@ for WORD in $(cat "${WORDS_FILE}" | sort -u); do
         if [[ "${HEXWORD}" =~ ${THIS} ]]; then
             IS_HEXWORD=0 # preliminary, true
             THAT=${THISISTHAT##*=}
-            # don't put this simple regex match in that string
-            THIS=${THIS//^/}
-            THIS=${THIS//$/}
+            # don't put this regex matches in that string
+            THIS=${THIS//[^[:alnum:]]/}
             HEXWORD=${HEXWORD//${THIS}/${THAT}}
         fi
     done
