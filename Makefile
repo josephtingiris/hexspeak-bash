@@ -41,3 +41,6 @@ hexwords-alpha-8:
 
 hexwords-alpha-16:
 	export WORDS_FILE=words_alpha.txt; hexspeak.bash 16 > hexwords-alpha-16.txt &
+
+hexwords-clean:
+	for hexwords_txt in hexwords.txt hexwords-[0-9]*.txt hexwords-alpha.txt hexwords-alpha-[0-9]*.txt; do echo "cleaning $$hexwords_txt"; sort -u $$hexwords_txt -o $$hexwords_txt; sed -i '/^$$/d' $$hexwords_txt; done 

@@ -53,7 +53,7 @@ THISISTHATS+=("W=3")
 
 HEXWORDS=0 # counter
 declare -u WORD
-for WORD in $(cat "${WORDS_FILE}" | sort -u); do
+for WORD in $(cat "${WORDS_FILE}" | sed -e '/,/s///g' -e '/-/s///g' -e '/\./s///g' -e "/'/s///g" -e '/&/s///g' | sort -uV); do
     IS_HEXWORD=1 # false
 
     HEXWORD=${WORD}
